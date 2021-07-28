@@ -1,0 +1,12 @@
+name: Debut
+author: Tiddy
+description: Début is a simple pseudorandom teleport plugin.
+website: https://oko.moe
+version: 0.1.0
+main: moe.oko.debut.Debut
+api-version: 1.17
+commands:
+  otp:
+    description: When first joining the server, you have an optional one time teleport.
+    usage: /<command> player
+    aliases: []
