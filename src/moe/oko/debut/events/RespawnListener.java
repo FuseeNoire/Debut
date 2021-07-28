@@ -8,11 +8,10 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class RespawnListener implements Listener {
     @EventHandler
-    public void onPlayerRespawn (PlayerRespawnEvent event){
+    public static void onPlayerRespawn(PlayerRespawnEvent event){
         Player player = event.getPlayer();
         if (!(event.isBedSpawn())){
-            TeleportHandler.handleRandomTeleport(player, player.getWorld());
+            TeleportHandler.handleRandomTeleport(player, player.getWorld(), true);
         }
-
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class TeleportHandler {
-    public static void handleRandomTeleport(Player player, World world){
+    public static void handleRandomTeleport(Player player, World world, boolean isRespawn) {
 
         Random ran = new Random();
         ArrayList<Integer> xList = new ArrayList<Integer>();
@@ -29,6 +29,10 @@ public class TeleportHandler {
         int y = (world.getHighestBlockYAt(x, z) + 1);
 
         Location location = new Location(world, x, y, z);
-        player.teleport(location);
+        if (isRespawn) {
+            world.setSpawnLocation(location);
+        } else {
+            player.teleport(location);
+        }
     }
 }
