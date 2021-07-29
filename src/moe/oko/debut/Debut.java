@@ -8,11 +8,13 @@ import moe.oko.debut.events.NewPlayerListener;
 public class Debut extends JavaPlugin {
     
     String plugin = "[Debut] ";
-    
+    private TeleportCommand teleportCommand;
+
     @Override
     public void onEnable(){
+        teleportCommand = new TeleportCommand();
         getServer().getConsoleSender().sendMessage(plugin + "Début loaded.");
-        getServer().getPluginManager().registerEvents(new NewPlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new NewPlayerListener(teleportCommand), this);
         getServer().getPluginManager().registerEvents(new RespawnListener(), this);
         this.getCommand("otp").setExecutor(new TeleportCommand());
     }

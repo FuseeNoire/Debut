@@ -1,5 +1,6 @@
 package moe.oko.debut.commands;
 
+import moe.oko.debut.Debut;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,15 +11,27 @@ import java.util.ArrayList;
 
 public class TeleportCommand implements CommandExecutor{
 
+    ArrayList<Player> newPlayers = new ArrayList<Player>();
     ArrayList<Player> requestingPlayers = new ArrayList<Player>();
     ArrayList<Player> requestedPlayers =  new ArrayList<Player>();
 
-    public void requestTeleport(Player p1, Player p2) {
+    public void addNewPlayer(Player newPlayer) {
+        newPlayers.add(newPlayer);
+        Bukkit.getScheduler().runTaskLater(Debut.getPlugin(Debut.class), () -> newPlayers.remove(newPlayer), 36000);
+    }
+
+    public boolean requestTeleport(Player p1, Player p2) {
+
+        if (!(newPlayers.contains(p1))) {
+            p1.sendMessage("times up buckaroo.");
+            return false;
+        }
 
         p2.sendMessage(p1.getName() + " is requesting a tp.");
         requestingPlayers.add(p1);
         requestedPlayers.add(p2);
-
+        newPlayers.remove(p1);
+        return true;
     }
 
     public boolean acceptTeleport(Player p1, Player p2) {
@@ -57,15 +70,12 @@ public class TeleportCommand implements CommandExecutor{
 
         switch (args[0]) {
             case "request":
-                requestTeleport(p1, p2);
-                break;
+                return requestTeleport(p1, p2);
             case "accept":
                 return acceptTeleport(p1, p2);
             default:
                 sender.sendMessage("invalid arguments.");
                 return false;
         }
-
-        return true;
     }
 }
