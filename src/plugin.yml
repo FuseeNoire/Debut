@@ -1,6 +1,6 @@
 name: Debut
-author: Tiddy
-description: Début is a simple pseudorandom teleport plugin.
+author: FuséeNoire
+description: Début is a small teleport manager for Spigot servers.
 website: https://oko.moe
 version: 0.1.0
 main: moe.oko.debut.Debut
