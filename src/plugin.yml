@@ -8,5 +8,5 @@ api-version: 1.17
 commands:
   otp:
     description: When first joining the server, you have an optional one time teleport.
-    usage: /<command> player
+    usage: /<command> [request|accept] player
     aliases: []
