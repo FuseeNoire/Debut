@@ -1,27 +1,23 @@
 package moe.oko.debut;
 
-import moe.oko.debut.commands.TeleportCommand;
-import org.bukkit.plugin.java.JavaPlugin;
+import moe.oko.debut.commands.OtpCommands;
+import moe.oko.debut.events.PlayerJoinListener;
 import moe.oko.debut.events.RespawnListener;
-import moe.oko.debut.events.NewPlayerListener;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public class Debut extends JavaPlugin {
-    
-    String plugin = "[Debut] ";
-    private TeleportCommand teleportCommand;
 
     @Override
-    public void onEnable(){
-        teleportCommand = new TeleportCommand();
-        getServer().getConsoleSender().sendMessage(plugin + "Début loaded.");
-        getServer().getPluginManager().registerEvents(new NewPlayerListener(teleportCommand), this);
+    public void onEnable() {
+        this.saveDefaultConfig();
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new RespawnListener(), this);
-        this.getCommand("otp").setExecutor(new TeleportCommand());
+        getCommand("otp").setExecutor(new OtpCommands());
     }
-   
+
     @Override
-    public void onDisable(){
-        getServer().getConsoleSender().sendMessage(plugin + "Début shutting down.");
+    public void onDisable() {
     }
 
 }
+

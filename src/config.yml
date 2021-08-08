@@ -1,0 +1,6 @@
+first-join-message: 'has joined for the first time!'
+possible-spawns:
+  - '100, 100'
+  - '200, 200'
+  - '300, 300'
+
