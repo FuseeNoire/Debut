@@ -10,9 +10,9 @@ import java.util.ArrayList;
 
 public class OtpCommands implements CommandExecutor {
 
-    public static ArrayList<Player> newPlayers = new ArrayList<Player>();
-    private static ArrayList<Player> requestingPlayers = new ArrayList<Player>();
-    private static ArrayList<Player> requestedPlayers = new ArrayList<Player>();
+    public static ArrayList<Player> newPlayers = new ArrayList<>();
+    private static ArrayList<Player> requestingPlayers = new ArrayList<>();
+    private static ArrayList<Player> requestedPlayers = new ArrayList<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -25,7 +25,7 @@ public class OtpCommands implements CommandExecutor {
             return true;
         }
         Player p1 = (Player) sender;
-        Player p2 = null;
+        Player p2;
         try {
             p2 = Bukkit.getPlayer(args[1]);
         } catch (Exception e) {
@@ -33,7 +33,7 @@ public class OtpCommands implements CommandExecutor {
             return true;
         }
         switch (args[0]) {
-            case "request":
+            case "request" -> {
                 if (!(newPlayers.contains(p1))) {
                     sender.sendMessage("Command sender must be new player.");
                     return true;
@@ -44,7 +44,8 @@ public class OtpCommands implements CommandExecutor {
                 p1.sendMessage("Teleport request sent.");
                 p2.sendMessage(p1.getName() + " is requesting to teleport.");
                 return true;
-            case "accept":
+            }
+            case "accept" -> {
                 if (!((requestedPlayers.contains(p1) && requestingPlayers.contains(p2)))) {
                     sender.sendMessage("No incoming requests from this player.");
                     return true;
@@ -57,9 +58,11 @@ public class OtpCommands implements CommandExecutor {
                 requestingPlayers.remove(p2);
                 requestedPlayers.remove(p1);
                 return true;
-            default:
+            }
+            default -> {
                 sender.sendMessage("Unexpected argument.");
                 return true;
+            }
         }
     }
 }

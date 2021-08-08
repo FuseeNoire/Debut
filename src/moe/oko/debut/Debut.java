@@ -1,5 +1,6 @@
 package moe.oko.debut;
 
+import moe.oko.debut.commands.DebugCommands;
 import moe.oko.debut.commands.OtpCommands;
 import moe.oko.debut.events.PlayerJoinListener;
 import moe.oko.debut.events.RespawnListener;
@@ -13,6 +14,7 @@ public class Debut extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new RespawnListener(), this);
         getCommand("otp").setExecutor(new OtpCommands());
+        getCommand("debut").setExecutor(new DebugCommands());
     }
 
     @Override
