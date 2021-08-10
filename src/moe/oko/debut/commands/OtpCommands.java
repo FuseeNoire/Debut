@@ -1,5 +1,6 @@
 package moe.oko.debut.commands;
 
+import moe.oko.debut.Debut;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,57 +15,103 @@ public class OtpCommands implements CommandExecutor {
     private static ArrayList<Player> requestingPlayers = new ArrayList<>();
     private static ArrayList<Player> requestedPlayers = new ArrayList<>();
 
+    private boolean otpRequest(Player requesting, Player requested) {
+        if (!(newPlayers.contains(requesting))) {
+            requesting.sendMessage("Only new players can use /otp.");
+            return true;
+        }
+        if (requestingPlayers.contains(requesting)) {
+            requesting.sendMessage("You can only have one out going teleport request at a time.");
+            return true;
+        }
+        requestingPlayers.add(requesting);
+        requestedPlayers.add(requested);
+        requesting.sendMessage("Teleport request sent.");
+        requested.sendMessage(requesting.getName() + " is requesting a teleport.");
+        Bukkit.getScheduler ().runTaskLater (Debut.getPlugin(Debut.class), () -> otpDecline(requesting, requested), 600);
+        return true;
+    }
+
+    private boolean otpAccept(Player requesting, Player requested) {
+        if (!(requestingPlayers.indexOf(requesting) == requestedPlayers.indexOf(requested))) {
+            requested.sendMessage("You have no incoming requests from " + requesting.getName() + ".");
+            return true;
+        }
+        requestingPlayers.remove(requesting);
+        requestedPlayers.remove(requested);
+        newPlayers.remove(requesting);
+        return true;
+    }
+
+    private boolean otpDecline(Player requesting, Player requested) {
+        if (!(requestingPlayers.indexOf(requesting) == requestedPlayers.indexOf(requested))) {
+            requested.sendMessage("You have no incoming requests from " + requesting.getName() + ".");
+            return true;
+        }
+        requestingPlayers.remove(requesting);
+        requestedPlayers.remove(requested);
+        requesting.sendMessage(requested.getName() + " has declined your teleport request, or did not accept it in time.");
+        requested.sendMessage("You have either declined " + requesting.getName() + ", or have either waited to long to accept.");
+        return true;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Command sender must be player.");
             return true;
         }
-        if (args.length < 2) {
-            sender.sendMessage("Expected arguments.");
+        if (args.length == 0) {
+            sender.sendMessage("Arguments expected");
             return true;
         }
-        Player p1 = (Player) sender;
-        Player p2;
-        try {
-            p2 = Bukkit.getPlayer(args[1]);
-        } catch (Exception e) {
-            sender.sendMessage("Second argument must be a player name.");
-            return true;
+
+        Player firstPlayer = (Player) sender;
+        Player secondPlayer;
+
+        // /otp request playerName
+        if (args[0].equalsIgnoreCase("request")) {
+            try {
+                secondPlayer = Bukkit.getPlayer(args[1]);
+            } catch (Exception e) {
+                sender.sendMessage("There is no player by that name.");
+                return true;
+            }
+            return otpRequest(firstPlayer, secondPlayer);
         }
-        switch (args[0]) {
-            case "request" -> {
-                if (!(newPlayers.contains(p1))) {
-                    sender.sendMessage("Command sender must be new player.");
-                    return true;
-                }
-                requestingPlayers.add(p1);
-                requestedPlayers.add(p2);
-                newPlayers.remove(p1);
-                p1.sendMessage("Teleport request sent.");
-                p2.sendMessage(p1.getName() + " is requesting to teleport.");
+
+        // /otp accept playerName
+        if (args[0].equalsIgnoreCase("accept")) {
+            try {
+                secondPlayer = Bukkit.getPlayer(args[1]);
+            } catch (Exception e) {
+                sender.sendMessage("There is no player by that name.");
                 return true;
             }
-            case "accept" -> {
-                if (!((requestedPlayers.contains(p1) && requestingPlayers.contains(p2)))) {
-                    sender.sendMessage("No incoming requests from this player.");
-                    return true;
-                }
-                if (!(requestedPlayers.indexOf(p1) == requestingPlayers.indexOf(p2))) {
-                    sender.sendMessage("No incoming requests from this player.");
-                    return true;
-                }
-                p2.teleport(p1);
-                requestingPlayers.remove(p2);
-                requestedPlayers.remove(p1);
-                return true;
-            }
-            default -> {
+            return otpAccept(secondPlayer, firstPlayer);
+        }
+
+        // /otp decline playerName
+        if (args[0].equalsIgnoreCase("decline")) {
+            try {
+                secondPlayer = Bukkit.getPlayer(args[1]);
+            } catch (Exception e) {
                 sender.sendMessage("Unexpected argument.");
                 return true;
             }
+            return otpDecline(secondPlayer, firstPlayer);
         }
+
+        // /otp playerName
+        else {
+            try {
+                secondPlayer = Bukkit.getPlayer(args[0]);
+            } catch (Exception e) {
+                sender.sendMessage("Unexpected argument.");
+                return true;
+            }
+            return otpRequest(firstPlayer, secondPlayer);
+        }
+
     }
 }
-
-
