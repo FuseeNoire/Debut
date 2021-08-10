@@ -40,6 +40,7 @@ public class OtpCommands implements CommandExecutor {
         requestingPlayers.remove(requesting);
         requestedPlayers.remove(requested);
         newPlayers.remove(requesting);
+        requesting.teleport(requested);
         return true;
     }
 
