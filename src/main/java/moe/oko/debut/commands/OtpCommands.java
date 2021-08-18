@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public class OtpCommands implements CommandExecutor {
 
     public static ArrayList<Player> newPlayers = new ArrayList<>();
-    private static ArrayList<Player> requestingPlayers = new ArrayList<>();
-    private static ArrayList<Player> requestedPlayers = new ArrayList<>();
+    private static final ArrayList<Player> requestingPlayers = new ArrayList<>();
+    private static final ArrayList<Player> requestedPlayers = new ArrayList<>();
 
     private boolean otpRequest(Player requesting, Player requested) {
         if (!(newPlayers.contains(requesting))) {
