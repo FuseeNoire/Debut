@@ -2,16 +2,24 @@ name: Debut
 author: FuséeNoire
 description: Début is a small teleport manager for Spigot servers.
 website: https://oko.moe
-version: 1.2.2
+version: ${project.version}
 main: moe.oko.debut.Debut
 api-version: 1.16
 commands:
   otp:
     description: A one time teleport command.
     usage: /<command> [request|accept] player
+    permission: otp.use
     aliases: []
   debut:
     description: Debug command
     usage: /<command> [list|add|remove] player
+    permission: otp.admin
     aliases: []
-
+permissions:
+  otp.use:
+    description: "Use one-time teleport functionality."
+    default: true
+  otp.admin:
+    description: "Use debug functionality."
+    default: op

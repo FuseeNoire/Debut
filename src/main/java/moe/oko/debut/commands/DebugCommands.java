@@ -9,10 +9,6 @@ import org.bukkit.entity.Player;
 public class DebugCommands implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender.isOp())){
-            sender.sendMessage("Sender must be an operator.");
-            return true;
-        }
         if (args[0].equalsIgnoreCase( "newPlayers")) {
             if (args[1].equalsIgnoreCase("list")){
                 int i = 0;
