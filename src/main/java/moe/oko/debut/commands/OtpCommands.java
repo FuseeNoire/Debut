@@ -33,7 +33,7 @@ public class OtpCommands implements CommandExecutor {
     }
 
     private boolean otpAccept(Player requesting, Player requested) {
-        if (!(requestingPlayers.indexOf(requesting) == requestedPlayers.indexOf(requested))) {
+        if (!(requestingPlayers.contains(requesting)) || !(requestedPlayers.contains(requested)) || !(requestingPlayers.indexOf(requesting) == requestedPlayers.indexOf(requested))) {
             requested.sendMessage("You have no incoming requests from " + requesting.getName() + ".");
             return true;
         }
