@@ -5,11 +5,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class OtpCommands implements CommandExecutor {
+public class OtpCommands implements TabExecutor {
 
     public static ArrayList<Player> newPlayers = new ArrayList<>();
     private static final ArrayList<Player> requestingPlayers = new ArrayList<>();
@@ -114,5 +116,16 @@ public class OtpCommands implements CommandExecutor {
             return otpRequest(firstPlayer, secondPlayer);
         }
 
+    }
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+        // TODO: make onTabComplete not complete insanity
+        if (args.length == 1) {
+            return List.of("accept", "decline", "request");
+        }
+        if (args.length == 2) {
+            return null;
+        }
+        return List.of("");
     }
 }
