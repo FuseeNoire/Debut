@@ -1,10 +1,10 @@
 name: Debut
 author: FuséeNoire
-description: Début is a small teleport manager for Spigot servers.
+description: Début is a small teleport manager for Paper servers.
 website: https://oko.moe
 version: ${project.version}
 main: moe.oko.debut.Debut
-api-version: 1.16
+api-version: 1.17
 commands:
   otp:
     description: A one time teleport command.

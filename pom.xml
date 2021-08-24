@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>moe.oko</groupId>
     <artifactId>Debut</artifactId>
-    <version>1.2.2</version>
+    <version>2.2.2</version>
     <packaging>jar</packaging>
 
     <name>Début</name>
-    <description>Début A small teleport manager for Spigot servers. </description>
+    <description>Début A small teleport manager for Paper servers. </description>
     <url>https://oko.moe</url>
 
     <licenses>
@@ -18,16 +18,16 @@
 
     <repositories>
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <id>papermc</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
