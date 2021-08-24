@@ -33,10 +33,12 @@ public class DebugCommands implements TabExecutor {
             switch (args[1]) {
                 case "add" -> {
                     OtpCommands.newPlayers.add(player);
+                    sender.sendMessage("Added " + sender.getName() + " to the new players list");
                     return true;
                 }
                 case "remove" -> {
                     OtpCommands.newPlayers.remove(player);
+                    sender.sendMessage("Removed " + sender.getName() + " from the new players list");
                     return true;
                 }
                 default -> {
